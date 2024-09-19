@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Table with JS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>BANG DIEM CUA EM</h1>
+        <form id="gradeForm">
+            <table class="responsive-table">
+                <tr>
+                    <td>Semester 1:</td>
+                    <td><input type="number" id="semester1" value="9" oninput="calculateAverage()"></td>
+                </tr>
+                <tr>
+                    <td>Semester 2:</td>
+                    <td><input type="number" id="semester2" value="10" oninput="calculateAverage()"></td>
+                </tr>
+                <tr>
+                    <td>Year:</td>
+                    <td>
+                        <select id="year">
+                            <option value="2" selected>2</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Summarise:</td>
+                    <td><input type="text" id="summarise" value="9.571428571428571" readonly></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span id="result" class="result">Hoc sinh gioi</span>
+                    </td>
+                </tr>
+            </table>
+            <div class="buttons">
+                <button type="submit">OK</button>
+                <button type="button">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
