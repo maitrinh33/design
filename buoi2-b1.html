@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group label {
+            width: 150px; /* Adjust this width according to your needs */
+            margin-right: 10px;
+        }
+
+        .input-group input[type="text"], 
+        .input-group input[type="number"] {
+            padding: 5px;
+            width: 200px; /* Adjust this width as needed */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .total {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Clothes</h1>
+
+    <div class="input-group">
+        <label for="productName">Product Name</label>
+        <input type="text" id="productName" placeholder="Enter product name">
+    </div>
+
+    <div class="input-group">
+        <label for="productQuantity">Product Quantity</label>
+        <input type="number" id="productQuantity" placeholder="Enter product quantity">
+    </div>
+
+    <div class="input-group">
+        <label for="productPrice">Product Price</label>
+        <input type="number" id="productPrice" placeholder="Enter product price">
+    </div>
+
+    <button onclick="addProduct()">Add</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Sub Total</th>
+            </tr>
+        </thead>
+        <tbody id="productTable">
+            <!-- Products will be added here dynamically -->
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="total">Total</td>
+                <td class="total" id="totalAmount">0</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        let productCount = 0;
+        let totalAmount = 0;
+
+        function addProduct() {
+            const name = document.getElementById("productName").value;
+            const quantity = document.getElementById("productQuantity").value;
+            const price = document.getElementById("productPrice").value;
+
+            if (name === "" || quantity === "" || price === "") {
+                alert("Please fill out all fields");
+                return;
+            }
+
+            productCount++;
+            const subTotal = quantity * price;
+
+            // Add new row in the table
+            const table = document.getElementById("productTable");
+            const row = table.insertRow();
+            row.innerHTML = `
+                <td>${productCount}</td>
+                <td>${name}</td>
+                <td>${quantity}</td>
+                <td>${price}</td>
+                <td>${subTotal}</td>
+            `;
+
+            // Update total amount
+            totalAmount += subTotal;
+            document.getElementById("totalAmount").innerText = totalAmount;
+
+            // Clear input fields
+            document.getElementById("productName").value = "";
+            document.getElementById("productQuantity").value = "";
+            document.getElementById("productPrice").value = "";
+        }
+    </script>
+
+</body>
+</html>
