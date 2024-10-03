@@ -1,38 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop Layout</title>
-    <link rel="stylesheet" href="thoitrang.css">
-</head>
-
-<body>  
-    <!-- Header Section -->
-    <header class="header">
-        <div class="header-logo">
-            <img src="./img/loho.jpg" alt="Logo">
-            <span>The Click</span>
-        </div>
-        <nav class="navbar">
-            <a href="#" class="active">Trang chủ</a>
-            <a href="#">Thời Trang Nam</a>
-            <a href="#">Thời Trang Nữ</a>
-            <a href="#">Tin Tức</a>
-        </nav>
-        <div class="search-box">
-            <input type="text" placeholder="Tìm Kiếm...">
-            <button>Tìm Kiếm</button>
-        </div>
-    </header>
-
-    <h2 class="category-title">THỜI TRANG NỮ</h2>
-    <div class="product-grid" id="women-products"></div>
-
-    <h2 class="category-title">THỜI TRANG NAM</h2>
-    <div class="product-grid" id="men-products"></div>
-
-    <script>
         // Array of women's clothing products
         const womenProducts = [
             {
@@ -112,7 +77,3 @@
         // Render products for women and men
         generateProductCards(womenProducts, 'women-products', false);
         generateProductCards(menProducts, 'men-products', true);
-
-    </script>
-</body>
-</html>
