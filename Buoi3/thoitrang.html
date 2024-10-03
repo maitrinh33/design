@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Layout</title>
+    <link rel="stylesheet" href="thoitrang.css">
+</head>
+
+<body>  
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-logo">
+            <img src="https://via.placeholder.com/50" alt="Logo">
+            <span>Shop DEBUG</span>
+        </div>
+        <nav class="navbar">
+            <a href="#" class="active">Trang chủ</a>
+            <a href="#">Thời Trang Nam</a>
+            <a href="#">Thời Trang Nữ</a>
+            <a href="#">Tin Tức</a>
+        </nav>
+        <div class="search-box">
+            <input type="text" placeholder="Tìm Kiếm...">
+            <button>Tìm Kiếm</button>
+        </div>
+    </header>
+
+    <h2 class="category-title">THỜI TRANG NỮ</h2>
+    <div class="product-grid" id="women-products"></div>
+
+    <h2 class="category-title">THỜI TRANG NAM</h2>
+    <div class="product-grid" id="men-products"></div>
+
+    <script>
+        // Array of women's clothing products
+        const womenProducts = [
+            {
+                img: 'https://i.pinimg.com/736x/60/93/1d/60931dfc9e618ca5bb103e2f4be481e2.jpg',
+                name: 'Áo phao Đông - KO0002',
+                code: 'QB102',
+                price: '269.000 vnd',
+                oldPrice: '370.000 vnd'
+            },
+            {
+                img: 'https://i.pinimg.com/474x/e9/18/0a/e9180a16b884500a9e066e8aea60dac6.jpg',
+                name: 'Quần jean nữ - K0KHH2',
+                code: 'QB102',
+                price: '269.000 vnd',
+                oldPrice: '370.000 vnd'
+            },
+            {
+                img: 'https://i.pinimg.com/474x/21/73/73/21737336682c546f5eb65f4408f0723e.jpg',
+                name: 'Áo khoác sơ mi nữ - VN0002',
+                code: 'VN102',
+                price: '249.000 vnd',
+                oldPrice: '369.000 vnd'
+            },
+            {
+                img: 'https://i.pinimg.com/474x/42/56/4e/42564ed9d2e60b53061696ed0d6db3a5.jpg',
+                name: 'Áo tay dài trái tim nữ - UTS2902',
+                code: 'US102',
+                price: '159.000 vnd',
+                oldPrice: '390.000 vnd'
+            }
+        ];
+
+        // Array of men's clothing products
+        const menProducts = [
+            {
+                img: 'https://i.pinimg.com/474x/15/bc/23/15bc236e0b714edbbda02c352641081d.jpg',
+                name: 'The Cosmo Quần short Kaki',
+                price: '250.000 vnd'
+            },
+            {
+                img: 'https://i.pinimg.com/474x/40/25/77/402577b77cd9e7c842aa54edfb31c369.jpg',
+                name: 'Áo Sơ Mi Xanh Công Sở',
+                price: '398.000 vnd'
+            },
+            {
+                img: 'https://i.pinimg.com/474x/59/cb/e1/59cbe1af51b6a83a2dc21e9f6714b13f.jpg',
+                name: 'Áo Phao Lông Cừu (Đen)',
+                price: '300.000 vnd'
+            },
+            {
+                img: 'https://i.pinimg.com/474x/0d/47/22/0d47222f38b617cfeab5c8b449888269.jpg',
+                name: 'Áo Phao Viền Sọc Trắng',
+                price: '300.000 vnd'
+            }
+        ];
+
+        // Generate product cards
+        function generateProductCards(products, targetId, isMen) {
+            const productGrid = document.getElementById(targetId);
+            products.forEach(product => {
+                const productCard = `
+                    <div class="product-card">
+                        <img src="${product.img}" alt="${product.name}">
+                        <div class="product-name">${product.name}</div>
+                        ${product.code ? `<div class="product-code">Code: ${product.code}</div>` : ''}
+                        <div class="price-container">
+                            <div class="product-price">${product.price}</div>
+                            ${product.oldPrice ? `<div class="product-old-price">${product.oldPrice}</div>` : ''}
+                        </div>
+                        <button class="${isMen ? 'buy-btn-men' : 'buy-btn'}">Đặt Mua</button>
+                    </div>
+                `;
+                productGrid.innerHTML += productCard;
+            });
+        }
+
+        // Render products for women and men
+        generateProductCards(womenProducts, 'women-products', false);
+        generateProductCards(menProducts, 'men-products', true);
+
+    </script>
+</body>
+</html>

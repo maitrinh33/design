@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Input Example</title>
+</head>
+<br style="text-align: center">
+    Name:
+    <input type="text" id="name">
+    </br>
+    </br>
+    Ten cua cac ong do la:
+    <input type="text" id="hienthi">
+    </br>
+    </br>
+    <input type="button" value="OK" onclick="getName()">
+    
+    <script type="text/javascript">
+        var array = [];
+        
+        function getName() {
+            var a = document.getElementById("name").value;
+            array.push(a);
+            document.getElementById("hienthi").value = array;
+        }
+    </script>
+</body>
+</html>

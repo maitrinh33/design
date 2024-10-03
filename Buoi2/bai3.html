@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Product Information</title>
+    <script src="bai3.js"></script>  
+    <style>
+        body {
+            background-color: #f8f8f9;
+            font-family: Arial, sans-serif;
+            color: #0B0742;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 30px;
+            text-align: left;
+            color: #0B0742;
+        }
+        label {
+            text-align: center;
+            color: #120C6E;
+        }
+        input {
+            display: block;
+            margin: 15px 0;
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #BFB8DA;
+            border-radius: 5px;
+            background-color: #f1fcfc;
+            color: #2C3E50;
+        }
+        input:focus {
+            outline: none;
+            border-color: #6F5F90;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(118, 117, 144, 0.1);
+        }
+        th {
+            background-color: #6F5F90;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        td {
+            background-color: #ffffff;
+            color: #2C3E50;
+            padding: 14px;
+            text-align: center;
+        }
+        button {
+            text-align: left;
+            margin: 10px 5px;
+            padding: 10px 15px;
+            background-color: #CD7672;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+        }
+        button:hover {
+            background-color: #DC8665;
+        }
+        button:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Customer Product Information</h1>
+    <label for="fullname">Fullname_Customer:</label>
+    <input type="text" id="fullname" placeholder="Enter your full name">
+    
+    <label for="id_pro">Id_Pro:</label>
+    <input type="text" id="id_pro" placeholder="Enter product ID">
+    
+    <label for="name_pro">Name_Pro:</label>
+    <input type="text" id="name_pro" placeholder="Enter product name">
+    
+    <label for="quantity_pro">Quantity_Pro:</label>
+    <input type="number" id="quantity_pro" min="0" placeholder="Enter quantity">
+    
+    <label for="price_pro">Price_Pro:</label>
+    <input type="number" id="price_pro" min="0" placeholder="Enter price">
+    
+    <div>
+        <button onclick="saveData()">Save</button>
+        <button onclick="showData()">Show</button>
+        <button onclick="resetForm()">Reset</button>
+    </div>
+    
+    <table id="data_table">
+        <thead>
+            <tr>
+                <th>Auto_Increment</th>
+                <th>Fullname_Customer</th>
+                <th>Id_Pro</th>
+                <th>Name_Pro</th>
+                <th>Quantity_Pro</th>
+                <th>Price_Pro</th>
+                <th>Discount</th>
+                <th>Amount</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+</html>
