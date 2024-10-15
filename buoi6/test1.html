@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính Chu vi và Diện tích Hình chữ nhật</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Tính Chu vi và Diện tích Hình chữ nhật</h2>
+    <form id="rectangleForm">
+        <label for="length">Chiều dài:</label>
+        <input type="number" id="length" name="length" placeholder="Nhập chiều dài" required>
+        
+        <label for="width">Chiều rộng:</label>
+        <input type="number" id="width" name="width" placeholder="Nhập chiều rộng" required>
+        
+        <button type="button" onclick="calculate()">Tính toán</button>
+    </form>
+
+    <div class="result">
+        <p id="perimeterResult"></p>
+        <p id="areaResult"></p>
+    </div>
+</div>
+
+<script>
+    // Hàm tính chu vi hình chữ nhật
+    const perimeter = (length, width) => 2 * (length + width);
+
+    // Hàm tính diện tích hình chữ nhật
+    const area = (length, width) => length * width;
+
+    // Hàm thực hiện tính toán
+    function calculate() {
+        // Lấy giá trị từ form
+        const length = parseFloat(document.getElementById('length').value);
+        const width = parseFloat(document.getElementById('width').value);
+
+        // Kiểm tra xem các giá trị có hợp lệ không
+        if (isNaN(length) || isNaN(width)) {
+            alert('Vui lòng nhập số hợp lệ.');
+            return;
+        }
+
+        // Tính chu vi và diện tích
+        const rectPerimeter = perimeter(length, width);
+        const rectArea = area(length, width);
+
+        // Hiển thị kết quả
+        document.getElementById('perimeterResult').innerText = `Chu vi hình chữ nhật: ${rectPerimeter}`;
+        document.getElementById('areaResult').innerText = `Diện tích hình chữ nhật: ${rectArea}`;
+    }
+</script>
+
+</body>
+</html>
