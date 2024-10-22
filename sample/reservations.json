@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Bob",
+    "roomNumber": 102,
+    "date": "2024-10-21",
+    "nights": 2,
+    "totalPrice": 300
+  },
+  {
+    "name": "Charlie",
+    "roomNumber": 103,
+    "date": "2024-10-22",
+    "nights": 1,
+    "totalPrice": 250
+  }
+]
