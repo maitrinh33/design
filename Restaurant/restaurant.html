@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Restaurant Management</title>
+</head>
+<body>
+    <h1>Restaurant List</h1>
+    <!-- Form to create new restaurant -->
+
+    <h2>Add a New Restaurant</h2>
+    <form id="restaurant-form">
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="text" id="address" placeholder="Address" required>
+        <input type="text" id="phone" placeholder="Phone" required>
+        <input type="text" id="cuisine" placeholder="Cuisine" required>
+        <input type="number" id="rating" placeholder="Rating" required min="1" max="5">
+        <button type="submit">Add Restaurant</button>
+    </form>
+
+    <div id="restaurant-list"></div>
+
+    <!-- Modal for update form -->
+    <div id="update-form-container" class="modal">
+        <div class="modal-content">
+            <h2>Update Restaurant</h2>
+            <form id="update-form">
+                <input type="text" id="update-name" placeholder="Name" required>
+                <input type="text" id="update-address" placeholder="Address" required>
+                <input type="text" id="update-phone" placeholder="Phone" required>
+                <input type="text" id="update-cuisine" placeholder="Cuisine" required>
+                <input type="number" id="update-rating" placeholder="Rating" required min="1" max="5">
+                <button type="submit">Update Restaurant</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
