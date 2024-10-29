@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Highlights</title>
+    <link rel="stylesheet" href="homepage.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Room Highlights</h1>
+    <hr class="title-underline">
+
+    <!-- Filter Buttons -->
+    <div class="filters">
+        <button class="filter-button active">ALL ROOMS</button>
+        <button class="filter-button">Double Room</button>
+        <button class="filter-button">Family Room</button>
+        <button class="filter-button">Luxury Room</button>
+        <button class="filter-button">Single Room</button>
+    </div>
+
+    <!-- Room Cards Grid -->
+    <div class="room-grid" id="room-grid">
+        <!-- Room cards will be populated here -->
+    </div>
+</div>
+
+<script>
+    // Sample data
+    const roomsData = [
+        {
+            "roomId": "1",
+            "price": 1000,
+            "feature": ["Full Breakfast", "Service Bar", "Cable / Satellite TV", "Hair Dresser"],
+            "rating": 5,
+            "description": "Spacious Family Room with all the comforts of home.",
+            "image": "https://loremflickr.com/320/240/room",
+            "roomType": "Family Room"
+        },
+        {
+            "roomId": "2",
+            "price": 450,
+            "feature": ["Free Wi-Fi", "Room Service", "Queen Bed"],
+            "rating": 4,
+            "description": "Cozy Standard Room perfect for a short stay.",
+            "image": "https://loremflickr.com/320/240/bedroom",
+            "roomType": "Standard Room"
+        },
+        {
+            "roomId": "3",
+            "price": 350,
+            "feature": ["Air Conditioning", "Balcony", "Mini Bar"],
+            "rating": 4.5,
+            "description": "Modern Deluxe Room with great amenities.",
+            "image": "https://loremflickr.com/320/240/hotel",
+            "roomType": "Deluxe Room"
+        },
+        {
+            "roomId": "4",
+            "price": 500,
+            "feature": ["Free Breakfast", "Jacuzzi", "Ocean View"],
+            "rating": 5,
+            "description": "Luxury Room for an unforgettable experience.",
+            "image": "https://loremflickr.com/320/240/suite",
+            "roomType": "Luxury Room"
+        }
+    ];
+
+    // Populate room cards
+    const roomGrid = document.getElementById('room-grid');
+    roomGrid.innerHTML = roomsData.map(room => `
+        <div class="room-card">
+            <div class="room-image">
+                <img src="${room.image}" alt="Room Image">
+                <div class="overlay">
+                    <div class="feature-list">
+                        <p><strong>Features:</strong></p>
+                        ${room.feature.map(feat => `<p>${feat}</p>`).join('')}
+                    </div>
+                </div>
+            </div>
+            <div class="room-details">
+                <div class="room-title">${room.roomType}</div>
+                <div class="room-price">$${room.price}/Per Night</div>
+                <div class="room-rating">${'★'.repeat(Math.floor(room.rating))}</div>
+                <p class="room-description">${room.description}</p>
+                <a href="#" class="book-now">Book Now</a>
+            </div>
+        </div>
+    `).join('');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Highlights</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: #414141;
+            font-family: 'Gilda Display', serif; 
+        }
+
+        .title-underline {
+            width: 40%;
+            border: none; 
+            height: 2px; 
+            background-color: #b56953; 
+            margin: 10px auto;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .filter-button {
+            padding: 20px 30px;
+            width: 164px;
+            border: 1px solid #e6e5e4;
+            border-radius: 4px;
+            background-color: #fcfbfb;
+            color: #000;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-button.active {
+            background-color: #b56953;
+            color: white;
+        }
+
+        .filter-button:hover {
+            background-color: #b56953;
+            color: white;
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 80px;
+            justify-content: center; /* Center grid within container */
+
+        }
+
+        .room-card {
+            position: relative;
+            display: flex;
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e6e0e0;
+            overflow: hidden;
+            width: 600px; 
+            height: 270px;
+        }
+
+        .room-image {
+            width: 320px; 
+            height: 270px;
+            position: relative; 
+        }
+
+        .room-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent */
+            opacity: 0; /* Start hidden */
+            transition: opacity 0.5s ease; /* Fade animation */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .room-card:hover .overlay {
+            opacity: 1; /* Show on hover */
+        }
+
+        .feature-list {
+            text-align: left;
+            padding: 30px;
+        }
+
+        .feature-list p {
+            margin: 20px 0;
+            font-size: 15px;
+            color: #555;
+        }
+
+        .room-details {
+            width: 270px; 
+            height: 270px;
+            padding: 23px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .room-price {
+            color: #414141;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .room-title {
+            color: #414141;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0px 5px;
+        }
+
+        .room-rating {
+            color: #f0a500;
+            margin: 5px 0px 10px;
+            font-size: 16px;
+        }
+
+        .room-description {
+            color: #777777;
+            font-size: 16px;
+            margin: 0px 0px 16px;
+            flex-grow: 1;
+        }
+
+        .book-now {
+          margin: 0px 0px 17px;
+            padding: 15px 25px;
+            width: 145.4px;
+            height: 47px;
+            background-color: #666666;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 15px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .book-now:hover {
+            background-color: #b67452;
+        }
+
+        @media (max-width: 1200px) {
+            .room-grid {
+                grid-template-columns: 1fr; /* One column on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Room Highlights</h1>
+    <hr class="title-underline">
+
+    <!-- Filter Buttons -->
+    <div class="filters">
+        <button class="filter-button active">ALL ROOMS</button>
+        <button class="filter-button">Double Room</button>
+        <button class="filter-button">Family Room</button>
+        <button class="filter-button">Luxury Room</button>
+        <button class="filter-button">Single Room</button>
+    </div>
+
+    <!-- Room Cards Grid -->
+    <div class="room-grid" id="room-grid">
+        <!-- Room cards will be populated here -->
+    </div>
+</div>
+
+<script>
+    // Sample data
+    const roomsData = [
+        {
+            "roomId": "1",
+            "price": 1000,
+            "feature": ["Full Breakfast", "Service Bar", "Cable / Satellite TV", "Hair Dresser"],
+            "rating": 5,
+            "description": "Spacious Family Room with all the comforts of home.",
+            "image": "https://loremflickr.com/320/240/room",
+            "roomType": "Family Room"
+        },
+        {
+            "roomId": "2",
+            "price": 450,
+            "feature": ["Free Wi-Fi", "Room Service", "Queen Bed"],
+            "rating": 4,
+            "description": "Cozy Standard Room perfect for a short stay.",
+            "image": "https://loremflickr.com/320/240/bedroom",
+            "roomType": "Standard Room"
+        },
+        {
+            "roomId": "3",
+            "price": 350,
+            "feature": ["Air Conditioning", "Balcony", "Mini Bar"],
+            "rating": 4.5,
+            "description": "Modern Deluxe Room with great amenities.",
+            "image": "https://loremflickr.com/320/240/hotel",
+            "roomType": "Deluxe Room"
+        },
+        {
+            "roomId": "4",
+            "price": 500,
+            "feature": ["Free Breakfast", "Jacuzzi", "Ocean View"],
+            "rating": 5,
+            "description": "Luxury Room for an unforgettable experience.",
+            "image": "https://loremflickr.com/320/240/suite",
+            "roomType": "Luxury Room"
+        }
+    ];
+
+    // Populate room cards
+    const roomGrid = document.getElementById('room-grid');
+    roomGrid.innerHTML = roomsData.map(room => `
+        <div class="room-card">
+            <div class="room-image">
+                <img src="${room.image}" alt="Room Image">
+                <div class="overlay">
+                    <div class="feature-list">
+                        <p><strong>Features:</strong></p>
+                        ${room.feature.map(feat => `<p>${feat}</p>`).join('')}
+                    </div>
+                </div>
+            </div>
+            <div class="room-details">
+                <div class="room-title">${room.roomType}</div>
+                <div class="room-price">$${room.price}/Per Night</div>
+                <div class="room-rating">${'★'.repeat(Math.floor(room.rating))}</div>
+                <p class="room-description">${room.description}</p>
+                <a href="#" class="book-now">Book Now</a>
+            </div>
+        </div>
+    `).join('');
+</script>
+
+</body>
+</html>
