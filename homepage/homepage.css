@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Work Sans', sans-serif;
 }
 
 body {
@@ -12,7 +12,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1000px;
     width: 100%;
 }
 
@@ -49,6 +49,7 @@ h1 {
     color: #000;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-size: 15px; 
 }
 
 .filter-button.active {
@@ -64,7 +65,7 @@ h1 {
 .room-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 80px;
+    gap: 70px;
     justify-content: center; /* Center grid within container */
 
 }
@@ -121,7 +122,7 @@ h1 {
 
 .feature-list p {
     margin: 20px 0;
-    font-size: 15px;
+    font-size: 16px;
     color: #000000;
 }
 
@@ -179,7 +180,7 @@ h1 {
     background-color: #b67452;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1000px) {
     .room-grid {
         grid-template-columns: 1fr; /* One column on smaller screens */
     }

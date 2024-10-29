@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap" rel="stylesheet">
     <title>Room Highlights</title>
     <link rel="stylesheet" href="homepage.css">
 </head>
 <body>
-
 <div class="container">
     <h1>Room Highlights</h1>
     <hr class="title-underline">
 
     <!-- Filter Buttons -->
     <div class="filters">
-        <button class="filter-button active">ALL ROOMS</button>
-        <button class="filter-button">Double Room</button>
-        <button class="filter-button">Family Room</button>
-        <button class="filter-button">Luxury Room</button>
-        <button class="filter-button">Single Room</button>
+        <button class="filter-button active" onclick="filterRooms('ALL ROOMS')">ALL ROOMS</button>
+        <button class="filter-button" onclick="filterRooms('Double Room')">Double Room</button>
+        <button class="filter-button" onclick="filterRooms('Family Room')">Family Room</button>
+        <button class="filter-button" onclick="filterRooms('Luxury Room')">Luxury Room</button>
+        <button class="filter-button" onclick="filterRooms('Single Room')">Single Room</button>
     </div>
 
     <!-- Room Cards Grid -->
@@ -46,7 +47,7 @@
             "rating": 4,
             "description": "Cozy Standard Room perfect for a short stay.",
             "image": "https://loremflickr.com/320/240/bedroom",
-            "roomType": "Standard Room"
+            "roomType": "Double Room"
         },
         {
             "roomId": "3",
@@ -55,7 +56,7 @@
             "rating": 4.5,
             "description": "Modern Deluxe Room with great amenities.",
             "image": "https://loremflickr.com/320/240/hotel",
-            "roomType": "Deluxe Room"
+            "roomType": "Single Room"
         },
         {
             "roomId": "4",
@@ -68,28 +69,43 @@
         }
     ];
 
-    // Populate room cards
-    const roomGrid = document.getElementById('room-grid');
-    roomGrid.innerHTML = roomsData.map(room => `
-        <div class="room-card">
-            <div class="room-image">
-                <img src="${room.image}" alt="Room Image">
-                <div class="overlay">
-                    <div class="feature-list">
-                        <p><strong>Features:</strong></p>
-                        ${room.feature.map(feat => `<p>${feat}</p>`).join('')}
+    // Function to populate room cards based on filtered data
+    function displayRooms(filteredRooms) {
+        const roomGrid = document.getElementById('room-grid');
+        roomGrid.innerHTML = filteredRooms.map(room => `
+            <div class="room-card">
+                <div class="room-image">
+                    <img src="${room.image}" alt="Room Image">
+                    <div class="overlay">
+                        <div class="feature-list">
+                            <p><strong>Features:</strong></p>
+                            ${room.feature.map(feat => `<p>${feat}</p>`).join('')}
+                        </div>
                     </div>
                 </div>
+                <div class="room-details">
+                    <div class="room-title">${room.roomType}</div>
+                    <div class="room-price">$${room.price}/Per Night</div>
+                    <div class="room-rating">${'★'.repeat(Math.floor(room.rating))}</div>
+                    <p class="room-description">${room.description}</p>
+                    <a href="#" class="book-now">Book Now</a>
+                </div>
             </div>
-            <div class="room-details">
-                <div class="room-title">${room.roomType}</div>
-                <div class="room-price">$${room.price}/Per Night</div>
-                <div class="room-rating">${'★'.repeat(Math.floor(room.rating))}</div>
-                <p class="room-description">${room.description}</p>
-                <a href="#" class="book-now">Book Now</a>
-            </div>
-        </div>
-    `).join('');
+        `).join('');
+    }
+
+    // Initial display of all rooms
+    displayRooms(roomsData);
+
+    // Function to filter rooms based on room type
+    function filterRooms(roomType) {
+        const filteredRooms = roomType === 'ALL ROOMS' ? roomsData : roomsData.filter(room => room.roomType === roomType);
+        displayRooms(filteredRooms);
+
+        // Update active button style
+        document.querySelectorAll('.filter-button').forEach(button => button.classList.remove('active'));
+        document.querySelector(`.filter-button[onclick="filterRooms('${roomType}')"]`).classList.add('active');
+    }
 </script>
 
 </body>
