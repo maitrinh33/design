@@ -124,6 +124,11 @@ h1 {
     margin: 20px 0;
     font-size: 16px;
     color: #000000;
+    position: relative; 
+}
+
+.feature-item::before {
+    margin-right: 10px; /* Space between arrow and text */
 }
 
 .room-details {
@@ -163,21 +168,22 @@ h1 {
 }
 
 .book-now {
-  margin: 0px 0px 17px;
-    padding: 15px 25px;
-    width: 145.4px;
-    height: 47px;
+    margin: 0px 0px 15px;
+    padding: 0; 
+    width: 145px;
+    height: 50px;
     background-color: #666666;
     color: white;
     border-radius: 5px;
     text-decoration: none;
     font-size: 15px;
-    text-align: center;
+    display: flex; 
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
     transition: background-color 0.3s ease;
 }
-
 .book-now:hover {
-    background-color: #b67452;
+    background-color: #b56953;
 }
 
 @media (max-width: 1000px) {
