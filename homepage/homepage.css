@@ -131,6 +131,21 @@ h1 {
     margin-right: 10px; /* Space between arrow and text */
 }
 
+.btn {
+    margin-top: 15px; /* Space above the button */
+    padding: 10px 15px; 
+    background-color: #000000; 
+    color: rgb(255, 255, 255);
+    border: none; 
+    border-radius: 5px; 
+    font-size: 12px; 
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.btn:hover {
+    background-color: #b56953; 
+}
+
 .room-details {
     width: 270px; 
     height: 270px;
