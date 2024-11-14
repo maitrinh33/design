@@ -25,10 +25,9 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
     res.redirect('/products');
   });  
-  app.get('/', (req, res) => {
-    res.send('<h1>Welcome to My App</h1><p><a href="/products">Go to Products</a></p>');
-  });
-  
+app.get('/', (req, res) => {
+  res.send('<h1>Welcome to My App</h1><p><a href="/products">Go to Products</a></p>');
+});
 app.set('view engine', 'ejs');  // Cấu hình EJS làm view engine
 app.use(bodyParser.urlencoded({ extended: true }));  // Xử lý dữ liệu từ form
 app.use(methodOverride('_method'));  // Giúp xử lý PUT/DELETE method trong form

@@ -1,5 +1,5 @@
 // app.js
-const Account = require('./models/account.model'); // Adjusted path if necessary
+const Account = require('./models/account.model'); 
 
 
 // Function to get all accounts
