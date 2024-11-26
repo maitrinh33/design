@@ -1,0 +1,37 @@
+<!-- edit-food.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Food</title>
+</head>
+<body>
+    <h1>Edit Food</h1>
+    <form action="/foods/<%= food._id %>" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="<%= food.name %>" required><br>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" value="<%= food.price %>" required><br>
+
+        <label for="img">Image URL:</label>
+        <input type="text" id="img" name="img" value="<%= food.img %>"><br>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" value="<%= food.address %>" required><br>
+
+        <label for="category_id">Category:</label>
+        <select id="category_id" name="category_id" required>
+            <!-- Populate categories dynamically -->
+            <% categories.forEach(category => { %>
+                <option value="<%= category._id %>" <%= category._id == food.category_id._id ? 'selected' : '' %>><%= category.name %></option>
+            <% }); %>
+        </select><br>
+
+        <button type="submit">Update Food</button>
+    </form>
+</body>
+</html>

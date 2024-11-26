@@ -10,7 +10,7 @@ module.exports = router;
 router.get("/", async (req, res) => {
     try {
         const orders = await Order.find();  // Fetch orders from database
-        res.render("order", { orders });    // Render 'order.ejs' without the .ejs extension
+        res.render("order", { orders });    
     } catch (err) {
         console.error(err);
         res.status(500).send("Server Error");

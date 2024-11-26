@@ -25,9 +25,31 @@ const getFoods = async (req, res) => {
 const createFood = async (req, res) => {
   try {
     const food = await Food.create(req.body); // Create a new food item
-    res.status(201).json(food); // Respond with the created food as JSON
+    // If the request is for HTML, redirect to the list of foods after creation
+    if (req.accepts('html')) {
+      res.redirect('/foods'); // Redirect to foods list after creating food
+    } else {
+      res.status(201).json(food); // Respond with the created food as JSON
+    }
   } catch (error) {
+    console.error("Error creating food:", error);
     res.status(500).json({ message: 'Error creating food', error: error.message || error });
+  }
+};
+
+const editFoodForm = async (req, res) => {
+  try {
+    const food = await Food.findById(req.params.id).populate('category_id');
+    if (!food) {
+      return res.status(404).send('Food not found');
+    }
+
+    // Fetch all categories for the select input
+    const categories = await Category.find();
+
+    res.render('edit-food', { food, categories });
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching food for edit', error: err.message });
   }
 };
 
@@ -36,8 +58,14 @@ const updateFood = async (req, res) => {
   try {
     const { id } = req.params; // Extract the food ID from the request parameters
     const updatedFood = await Food.findByIdAndUpdate(id, req.body, { new: true }); // Update the food
-    res.status(200).json(updatedFood); // Respond with the updated food as JSON
+    // Check if the request is for an HTML page or JSON response
+    if (req.accepts('html')) {
+      res.redirect(`/foods/${id}`); // Redirect to the updated food page after update
+    } else {
+      res.status(200).json(updatedFood); // Respond with the updated food as JSON
+    }
   } catch (error) {
+    console.error("Error updating food:", error);
     res.status(500).json({ message: 'Error updating food', error: error.message || error });
   }
 };
@@ -47,8 +75,14 @@ const deleteFood = async (req, res) => {
   try {
     const { id } = req.params; // Extract the food ID from the request parameters
     await Food.findByIdAndDelete(id); // Delete the food item
-    res.status(200).json({ message: 'Food item deleted successfully' }); // Respond with success message
+    // Check if the request is for an HTML page or JSON response
+    if (req.accepts('html')) {
+      res.redirect('/foods'); // Redirect to the foods list after deletion
+    } else {
+      res.status(200).json({ message: 'Food item deleted successfully' }); // Respond with success message
+    }
   } catch (error) {
+    console.error("Error deleting food:", error);
     res.status(500).json({ message: 'Error deleting food', error: error.message || error });
   }
 };

@@ -5,28 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food List</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
         table {
-            width: 80%;
-            margin: auto;
+            width: 90%;
+            margin: 20px auto;
             border-collapse: collapse;
+            background-color: #fff;
         }
         table, th, td {
-            border: 1px solid black;
+            border: 1px solid #ddd;
         }
         th, td {
-            padding: 10px;
+            padding: 12px;
             text-align: left;
         }
         th {
             background-color: #f4f4f4;
+            color: #333;
         }
-        h1 {
+        td img {
+            width: 100px;
+            height: auto;
+        }
+        td {
             text-align: center;
+        }
+        .no-image {
+            color: #888;
+            font-style: italic;
+        }
+        .no-category {
+            color: #888;
+        }
+        .actions button {
+            margin: 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 10px;
+            background-color: #000000;
+            color: white;
+            cursor: pointer;
+        }
+        .actions button:hover {
+            background-color: #011a34;
+        }
+        .actions form {
+            display: inline-block;
+            margin: 0;
         }
     </style>
 </head>
 <body>
     <h1>Food List</h1>
+    <div style="text-align: left; margin-bottom: 20px; margin-left: 70px">
+        <a href="/foods/new">
+            <button>Create New Food +</button>
+        </a>
+    </div>
+    <!-- Table for displaying food items -->
     <table>
         <thead>
             <tr>
@@ -35,6 +81,7 @@
                 <th>Image</th>
                 <th>Address</th>
                 <th>Category</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -42,24 +89,43 @@
                 <% foods.forEach(food => { %>
                     <tr>
                         <td><%= food.name %></td>
-                        <td>$<%= food.price %></td>
+                        <td>$<%= food.price.toFixed(2) %></td>
                         <td>
                             <% if (food.img) { %>
-                                <img src="<%= food.img %>" alt="<%= food.name %>" style="width: 100px; height: auto;">
+                                <img src="<%= food.img %>" alt="<%= food.name %>">
                             <% } else { %>
-                                No image available
+                                <span class="no-image">No image available</span>
                             <% } %>
                         </td>
                         <td><%= food.address %></td>
-                        <td><%= food.category_id ? food.category_id.name : 'No Category' %></td>
+                        <td><%= food.category_id ? food.category_id.name : '<span class="no-category">No Category</span>' %></td>
+                        <td class="actions">
+                            <!-- Edit Button -->
+                            <a href="/foods/<%= food._id %>/edit">
+                                <button>Edit</button>
+                            </a>
+                            <!-- Delete Button -->
+                            <form action="/foods/<%= food._id %>?_method=DELETE" method="POST" style="display:inline;">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 <% }); %>
             <% } else { %>
                 <tr>
-                    <td colspan="5" style="text-align: center;">No food items available</td>
+                    <td colspan="6" style="text-align: center;">No food items available</td>
                 </tr>
             <% } %>
         </tbody>
     </table>
+
+    <!-- Link to the /orders page -->
+    <div style="text-align: left; margin-bottom: 20px; margin-left: 70px">
+        <a href="/orders">
+            <button>View Orders</button>
+        </a>
+    </div>
+
+
 </body>
 </html>

@@ -1,18 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const foodController = require('../controllers/food.controller'); // Import the controller properly
-console.log(foodController); // Temporary debugging
+router.get("/new", (req, res) => {
+    res.render('create-food'); 
+  });
+  
+// Import the controller functions from the food.controller.js file
+const { createFood, getFoods, updateFood, deleteFood } = require('../controllers/food.controller');
 
-// Route to retrieve all foods
-router.get('/', foodController.getFoods);
-
-// Route to create, update, and delete food items
+// Define the routes and map them to the corresponding controller functions
 router.route('/')
-  .post(foodController.createFood) // Handle POST request to create a new food item
-  .get(foodController.getFoods); // Handle GET request to fetch all food items
+  .post(createFood)   // Handle POST requests to create a new food item
+  .get(getFoods);     // Handle GET requests to retrieve all food items
 
 router.route('/:id')
-  .patch(foodController.updateFood) // Handle PATCH request to update a specific food item
-  .delete(foodController.deleteFood); // Handle DELETE request to delete a specific food item
+  .patch(updateFood)  // Handle PATCH requests to update a specific food item
+  .delete(deleteFood) // Handle DELETE requests to delete a specific food item
 
-module.exports = router; // Export the router
+// Export the configured router
+module.exports = router;
