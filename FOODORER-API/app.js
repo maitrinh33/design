@@ -1,26 +1,34 @@
-// app.js
-const Account = require('./models/account.model'); 
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+const connectDB = require("./configs/database");
+const orderRouter = require("./routers/order.router");
+const foodRouter = require('./routers/food.router');
 
+const app = express();
 
-// Function to get all accounts
-const getAllAccounts = async (req, res) => {
-    try {
-        const accounts = await Account.find();
-        res.json(accounts);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-// Function to create a new account
-const createAccount = async (req, res) => {
-    try {
-        const newAccount = new Account(req.body);
-        await newAccount.save();
-        res.status(201).json(newAccount);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-module.exports = { getAllAccounts, createAccount };
+// Connect to the database
+connectDB();
+
+// Define a route for the root URL
+app.get("/", (req, res) => {
+  res.send("Welcome to the FOODORDER API!"); // This sends a message when visiting '/'
+});
+
+// Register the routers
+app.use('/foods', foodRouter); 
+app.use("/orders", orderRouter);
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

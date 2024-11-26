@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food List</title>
+    <style>
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Food List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Address</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (foods.length > 0) { %>
+                <% foods.forEach(food => { %>
+                    <tr>
+                        <td><%= food.name %></td>
+                        <td>$<%= food.price %></td>
+                        <td>
+                            <% if (food.img) { %>
+                                <img src="<%= food.img %>" alt="<%= food.name %>" style="width: 100px; height: auto;">
+                            <% } else { %>
+                                No image available
+                            <% } %>
+                        </td>
+                        <td><%= food.address %></td>
+                        <td><%= food.category_id ? food.category_id.name : 'No Category' %></td>
+                    </tr>
+                <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="5" style="text-align: center;">No food items available</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

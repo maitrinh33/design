@@ -1,1 +1,0 @@
-const Food = require('../models/category.model');
