@@ -24,7 +24,7 @@
       </div>
       <div class="form-group">
         <label for="image">Image</label>
-        <input type="file" class="form-control-file" id="image" required>
+        <input type="file" class="form-control-file" id="image">
       </div>
       <button type="submit" class="btn btn-primary">Add Product</button>
     </form>
@@ -34,48 +34,59 @@
 
   <script>
     const form = document.getElementById('product-form');
+    let editingProductId = null;
+
     form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+      e.preventDefault();
 
-    // Lấy dữ liệu từ form
-    const formData = new FormData();
-    formData.append('name', document.getElementById('name').value);
-    formData.append('description', document.getElementById('description').value);
-    formData.append('price', document.getElementById('price').value);
-    formData.append('image', document.getElementById('image').files[0]);
+      const formData = new FormData();
+      formData.append('name', document.getElementById('name').value);
+      formData.append('description', document.getElementById('description').value);
+      formData.append('price', document.getElementById('price').value);
+      const imageFile = document.getElementById('image').files[0];
+      if (imageFile) {
+        formData.append('image', imageFile);
+      }
 
-    try {
-        // Gửi yêu cầu POST đến API
-        const response = await fetch('http://localhost:5000/api/products', {
-        method: 'POST',
-        body: formData,
+      const url = editingProductId
+        ? `http://localhost:5000/api/products/${editingProductId}`
+        : 'http://localhost:5000/api/products';
+
+      const method = editingProductId ? 'PUT' : 'POST';
+
+      try {
+        const response = await fetch(url, {
+          method: method,
+          body: formData,
         });
 
         if (response.ok) {
-        // Nếu thêm sản phẩm thành công, tải lại danh sách
-        loadProducts();
+          loadProducts();
+          resetForm();
         } else {
-        console.error('Failed to add product');
+          console.error('Failed to add or update product');
         }
-    } catch (error) {
+      } catch (error) {
         console.error('Error:', error);
-    }
+      }
     });
-
 
     async function loadProducts() {
       const response = await fetch('http://localhost:5000/api/products');
       const products = await response.json();
       const productCards = document.getElementById('product-cards');
-      productCards.innerHTML = '';
+      productCards.innerHTML = ''; // Clear the product list before reloading
+
       products.forEach(product => {
         const card = `
-          <div class="card" style="width: 18rem; margin: 10px; display: inline-block;">
+          <div class="card" style="width: 18rem; margin: 10px; display: inline-block;" id="product-${product._id}">
             <img src="${product.image}" class="card-img-top" alt="${product.name}">
             <div class="card-body">
               <h5 class="card-title">${product.name}</h5>
               <p class="card-text">${product.description}</p>
               <p class="card-text">$${product.price}</p>
+              <button class="btn btn-warning" onclick="editProduct('${product._id}')">Edit</button>
+              <button class="btn btn-danger" onclick="deleteProduct('${product._id}')">Delete</button>
             </div>
           </div>
         `;
@@ -83,7 +94,60 @@
       });
     }
 
-    loadProducts(); // Tải sản phẩm ngay khi tải trang
+    async function editProduct(id) {
+      const response = await fetch(`http://localhost:5000/api/products/${id}`);
+      const product = await response.json();
+
+      document.getElementById('name').value = product.name;
+      document.getElementById('description').value = product.description;
+      document.getElementById('price').value = product.price;
+      // Image cannot be set in the input, but you can show the old image elsewhere if needed
+
+      editingProductId = product._id;
+      document.querySelector('button[type="submit"]').textContent = 'Update Product';
+    }
+
+    async function updateProduct(id) {
+      const form = document.getElementById('product-form');
+      const formData = new FormData(form);
+      formData.append('image', document.getElementById('image').files[0]);
+
+      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+        method: 'PUT',
+        body: formData,
+      });
+
+      if (response.ok) {
+        loadProducts(); // Reload products after successful update
+        document.querySelector('button[type="submit"]').textContent = 'Add Product'; // Reset the button
+        editingProductId = null;
+      } else {
+        console.error('Failed to update product');
+      }
+    }
+
+    async function deleteProduct(id) {
+      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        const productCard = document.getElementById(`product-${id}`);
+        if (productCard) {
+          productCard.remove();
+        }
+      } else {
+        console.error('Failed to delete product');
+      }
+    }
+
+    function resetForm() {
+      document.getElementById('product-form').reset();
+      editingProductId = null;
+      document.querySelector('button[type="submit"]').textContent = 'Add Product';
+    }
+
+    loadProducts(); // Load products immediately when the page loads
   </script>
 </body>
 </html>
