@@ -36,6 +36,7 @@
     const form = document.getElementById('product-form');
     let editingProductId = null;
 
+    // Handle form submission (for both add and update)
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -61,8 +62,8 @@
         });
 
         if (response.ok) {
-          loadProducts();
-          resetForm();
+          loadProducts(); // Reload product list
+          resetForm();    // Reset form and button to Add
         } else {
           console.error('Failed to add or update product');
         }
@@ -71,6 +72,7 @@
       }
     });
 
+    // Load all products and display them
     async function loadProducts() {
       const response = await fetch('http://localhost:5000/api/products');
       const products = await response.json();
@@ -94,44 +96,63 @@
       });
     }
 
-    async function editProduct(id) {
-      const response = await fetch(`http://localhost:5000/api/products/${id}`);
-      const product = await response.json();
+    // Edit the product and populate the form for update
+    function editProduct(id) {
+        fetch(`http://localhost:5000/api/products/${id}`)
+            .then(response => response.json())
+            .then(product => {
+            document.getElementById('name').value = product.name;
+            document.getElementById('description').value = product.description;
+            document.getElementById('price').value = product.price;
+            
+            // Set the existing image URL in a hidden input or similar field
+            document.getElementById('image-url').value = product.image;
 
-      document.getElementById('name').value = product.name;
-      document.getElementById('description').value = product.description;
-      document.getElementById('price').value = product.price;
-      // Image cannot be set in the input, but you can show the old image elsewhere if needed
+            // Update the button to call updateProduct when clicked
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.textContent = 'Update Product';
 
-      editingProductId = product._id;
-      document.querySelector('button[type="submit"]').textContent = 'Update Product';
-    }
+            // Update the button click to update the product
+            submitButton.onclick = function (e) {
+                e.preventDefault();
+                updateProduct(id);
+            };
+            })
+            .catch(error => console.error('Error editing product:', error));
+        }
 
+
+    // Update the product
     async function updateProduct(id) {
-      const form = document.getElementById('product-form');
-      const formData = new FormData(form);
-      formData.append('image', document.getElementById('image').files[0]);
+    const form = document.getElementById('product-form');
+    const formData = new FormData(form);
 
-      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+    // Add the existing image URL to the form data if it's not replaced
+    const imageUrl = document.getElementById('image-url').value;
+    formData.append('image', imageUrl);
+
+    const response = await fetch(`http://localhost:5000/api/products/${id}`, {
         method: 'PUT',
         body: formData,
-      });
+    });
 
-      if (response.ok) {
+    if (response.ok) {
         loadProducts(); // Reload products after successful update
         document.querySelector('button[type="submit"]').textContent = 'Add Product'; // Reset the button
-        editingProductId = null;
-      } else {
+    } else {
         console.error('Failed to update product');
-      }
+    }
     }
 
+
+    // Delete a product and remove the card from the DOM
     async function deleteProduct(id) {
       const response = await fetch(`http://localhost:5000/api/products/${id}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
+        // Remove the product card from the DOM
         const productCard = document.getElementById(`product-${id}`);
         if (productCard) {
           productCard.remove();
@@ -141,13 +162,15 @@
       }
     }
 
+    // Reset form and button state to Add Product
     function resetForm() {
       document.getElementById('product-form').reset();
       editingProductId = null;
       document.querySelector('button[type="submit"]').textContent = 'Add Product';
     }
 
-    loadProducts(); // Load products immediately when the page loads
+    // Load products immediately on page load
+    loadProducts();
   </script>
 </body>
 </html>

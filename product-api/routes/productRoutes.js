@@ -16,8 +16,14 @@ const upload = multer({ storage: storage });
 
 // Định nghĩa các route
 router.get('/', productController.getAllProducts);
+
+// POST route for creating a product
 router.post('/', upload.single('image'), productController.createProduct);
-router.put('/:id', productController.updateProduct);
+
+// PUT route for updating a product (with file upload support)
+router.put('/:id', upload.single('image'), productController.updateProduct);
+
+// DELETE route for deleting a product
 router.delete('/:id', productController.deleteProduct);
 
 module.exports = router;
