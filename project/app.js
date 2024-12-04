@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
-const pageRoutes = require('./routes/pageRoutes'); // Import the page routes
+const pageRoutes = require('./routes/pageRoutes'); 
+const pageController = require('./controllers/pageController');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -28,7 +29,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Use the routes for the application
 app.use('/', pageRoutes);
-
 // Start server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

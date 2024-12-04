@@ -44,119 +44,114 @@
 	</div>
 	<div class="container">
 		<div id="content" class="space-top-none">
-			<div class="main-content">
-				<div class="space60">&nbsp;</div>
-	
-				<!-- New Products Section -->
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="beta-products-list">
-							<h4>New Products</h4>
-							<div class="beta-products-details">
-								<!-- Display count of products in New Products -->
-								<p class="pull-left"><%= products.slice(0, 4).length %> styles found</p>
-								<div class="clearfix"></div>
-							</div>
-	
-							<div class="row">
-								<!-- Loop through the first 4 products for New Products -->
-								<% products.slice(0, 4).forEach(product => { %>
-									<div class="col-sm-3">
-										<div class="single-item">
-											<% if (product.salePrice) { %> 
-												<!-- If product is on sale, display the sale ribbon -->
-												<div class="ribbon-wrapper"><div class="ribbon sale">Sale</div></div>
-											<% } %>
-	
-											<div class="single-item-header">
-												<a href="/product/<%= product._id %>">
-													<img src="/assets/dest/images/products/<%= product.image %>" alt="<%= product.name %>">
-												</a>
-											</div>
-											<div class="single-item-body">
-												<p class="single-item-title"><%= product.name %></p>
-												<p class="single-item-price">
-													<% if (product.salePrice) { %> 
-														<!-- Display both original and sale price -->
-														<span class="flash-del">$<%= product.price.toFixed(2) %></span>
-														<span class="flash-sale">$<%= product.salePrice.toFixed(2) %></span>
-													<% } else { %>
-														<!-- Display only the regular price if not on sale -->
-														<span>$<%= product.price.toFixed(2) %></span>
-													<% } %>
-												</p>
-											</div>
-											<div class="single-item-caption">
-												<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-												<a class="beta-btn primary" href="/product/<%= product._id %>">Details <i class="fa fa-chevron-right"></i></a>
-												<div class="clearfix"></div>
-											</div>
-											<div class="space50">&nbsp;</div>
-										</div>
-									</div>
-								<% }); %>
-							</div>
-						</div>
+		  <div class="main-content">
+			<div class="space60">&nbsp;</div>
+	  
+			<!-- New Products Section -->
+			<div class="row">
+			  <div class="col-sm-12">
+				<div class="beta-products-list">
+				<h4>New Products</h4>
+					<div class="beta-products-details">
+					  <p class="pull-left"><%= products.slice(0, 4).length %> styles found</p>
+					  <div class="clearfix"></div>
 					</div>
-				</div>
-	
-				<div class="space60">&nbsp;</div> <!-- Space between sections -->
-	
-				<!-- Top Products Section -->
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="beta-products-list">
-							<h4>Top Products</h4>
-							<div class="beta-products-details">
-								<!-- Display count of products in Top Products -->
-								<p class="pull-left"><%= products.slice(4, 12).length %> styles found</p>
-								<div class="clearfix"></div>
-							</div>
-	
-							<div class="row">
-								<!-- Loop through the next 8 products for Top Products -->
-								<% products.slice(4, 12).forEach(product => { %>
-									<div class="col-sm-3">
-										<div class="single-item">
-											<% if (product.salePrice) { %> 
-												<!-- If product is on sale, display the sale ribbon -->
-												<div class="ribbon-wrapper"><div class="ribbon sale">Sale</div></div>
-											<% } %>
-	
-											<div class="single-item-header">
-												<a href="/product/<%= product._id %>">
-													<img src="/assets/dest/images/products/<%= product.image %>" alt="<%= product.name %>">
-												</a>
-											</div>
-											<div class="single-item-body">
-												<p class="single-item-title"><%= product.name %></p>
-												<p class="single-item-price">
-													<% if (product.salePrice) { %> 
-														<!-- Display both original and sale price -->
-														<span class="flash-del">$<%= product.price.toFixed(2) %></span>
-														<span class="flash-sale">$<%= product.salePrice.toFixed(2) %></span>
-													<% } else { %>
-														<!-- Display only the regular price if not on sale -->
-														<span>$<%= product.price.toFixed(2) %></span>
-													<% } %>
-												</p>
-											</div>
-											<div class="single-item-caption">
-												<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-												<a class="beta-btn primary" href="/product/<%= product._id %>">Details <i class="fa fa-chevron-right"></i></a>
-												<div class="clearfix"></div>
-											</div>
-											<div class="space50">&nbsp;</div>
-										</div>
-									</div>
-								<% }); %>
-							</div>
+					
+	  
+				  <div class="row">
+					<!-- Loop through the first 4 products for New Products -->
+					<% products.slice(0, 4).forEach(product => { %>
+					  <div class="col-sm-3">
+						<div class="single-item">
+						  <% if (product.promotion_price) { %> 
+							<!-- If product is on sale, display the sale ribbon -->
+							<div class="ribbon-wrapper"><div class="ribbon sale">Sale</div></div>
+						  <% } %>
+	  
+						  <div class="single-item-header">
+							<a href="/product/<%= product._id %>">
+							  <img src="/assets/dest/images/products/<%= product.image || 'default-image.jpg' %>" alt="<%= product.name %>">
+							</a>
+						  </div>
+						  <div class="single-item-body">
+							<p class="single-item-title"><%= product.name %></p>
+							<p class="single-item-price">
+							  <% if (product.promotion_price) { %> 
+								<span class="flash-del">$<%= product.unit_price ? product.unit_price.toFixed(2) : 'N/A' %></span>
+								<span class="flash-sale">$<%= product.promotion_price ? product.promotion_price.toFixed(2) : 'N/A' %></span>
+							  <% } else { %>
+								<span>$<%= product.unit_price ? product.unit_price.toFixed(2) : 'N/A' %></span>
+							  <% } %>
+							</p>
+						  </div>
+						  <div class="single-item-caption">
+							<a class="add-to-cart pull-left" href="/shopping_cart"><i class="fa fa-shopping-cart"></i></a>
+							<a class="beta-btn primary" href="/product/<%= product._id %>">Details <i class="fa fa-chevron-right"></i></a>
+							<div class="clearfix"></div>
+						  </div>
+						  <div class="space50">&nbsp;</div>
 						</div>
-					</div>
+					  </div>
+					<% }); %>
+				  </div>
 				</div>
+			  </div>
 			</div>
+	  
+			<div class="space60">&nbsp;</div> <!-- Space between sections -->
+	  
+			<!-- Top Products Section -->
+			<div class="row">
+			  <div class="col-sm-12">
+				<div class="beta-products-list">
+				  <h4>Top Products</h4>
+				  <div class="beta-products-details">
+					<p class="pull-left"><%= products.slice(4, 12).length %> styles found</p>
+					<div class="clearfix"></div>
+				  </div>
+	  
+				  <div class="row">
+					<!-- Loop through the next 8 products for Top Products -->
+					<% products.slice(4, 12).forEach(product => { %>
+					  <div class="col-sm-3">
+						<div class="single-item">
+						  <% if (product.promotion_price) { %> 
+							<div class="ribbon-wrapper"><div class="ribbon sale">Sale</div></div>
+						  <% } %>
+	  
+						  <div class="single-item-header">
+							<a href="/product/<%= product._id %>">
+							  <img src="/assets/dest/images/products/<%= product.image || 'default-image.jpg' %>" alt="<%= product.name %>">
+							</a>
+						  </div>
+						  <div class="single-item-body">
+							<p class="single-item-title"><%= product.name %></p>
+							<p class="single-item-price">
+							  <% if (product.promotion_price) { %> 
+								<span class="flash-del">$<%= product.unit_price ? product.unit_price.toFixed(2) : 'N/A' %></span>
+								<span class="flash-sale">$<%= product.promotion_price ? product.promotion_price.toFixed(2) : 'N/A' %></span>
+							  <% } else { %>
+								<span>$<%= product.unit_price ? product.unit_price.toFixed(2) : 'N/A' %></span>
+							  <% } %>
+							</p>
+						  </div>
+						  <div class="single-item-caption">
+							<a class="add-to-cart pull-left" href="/shopping_cart"><i class="fa fa-shopping-cart"></i></a>
+							<a class="beta-btn primary" href="/product/<%= product._id %>">Details <i class="fa fa-chevron-right"></i></a>
+							<div class="clearfix"></div>
+						  </div>
+						  <div class="space50">&nbsp;</div>
+						</div>
+					  </div>
+					<% }); %>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
 		</div>
-	</div>
+	  </div>
+	  
 	
 	
 	

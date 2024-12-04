@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Product = require('./models/Product'); // Update path if necessary
+const Product = require('./models/product'); // Adjust the path as needed
+const ProductType = require('./models/product_type'); // To ensure `id_type` references valid types
 
 // Database connection
 mongoose.connect('mongodb://localhost:27017/project', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -11,45 +12,72 @@ mongoose.connect('mongodb://localhost:27017/project', { useNewUrlParser: true, u
     console.log('Error connecting to MongoDB:', err);
   });
 
+// Sample product types (ensure they exist before linking them in products)
+const productTypes = [
+  { name: "Electronics", description: "Electronic items" },
+  { name: "Fashion", description: "Clothing and accessories" },
+];
+
 // Base product data for New and Top Products
-const baseProduct = (name, price, salePrice, image, description, category, stockQuantity) => ({
+const baseProduct = (name, id_type, unit_price, promotion_price, image, description, unit) => ({
   name,
-  price,
-  salePrice,
-  image,
+  id_type,
   description,
-  category,
-  stockQuantity,
+  unit_price,
+  promotion_price,
+  image,
+  unit,
 });
 
-// Generate New Products (4 products)
-const newProducts = [
-  baseProduct("New Product 1", 50, 40, "1.jpg", "New product description", "Electronics", 100),
-  baseProduct("New Product 2", 60, 50, "2.jpg", "New product description", "Electronics", 50),
-  baseProduct("New Product 3", 70, 60, "3.jpg", "New product description", "Electronics", 30),
-  baseProduct("New Product 4", 80, 70, "4.jpg", "New product description", "Electronics", 120),
+// New Products (4 products)
+const newProductsData = [
+  { name: "New Product 1", unit_price: 50, promotion_price: 40, image: "1.jpg", description: "New product description", unit: "pcs", type: "Electronics" },
+  { name: "New Product 2", unit_price: 60, promotion_price: 50, image: "2.jpg", description: "New product description", unit: "pcs", type: "Electronics" },
+  { name: "New Product 3", unit_price: 70, promotion_price: 60, image: "3.jpg", description: "New product description", unit: "pcs", type: "Electronics" },
+  { name: "New Product 4", unit_price: 80, promotion_price: 70, image: "4.jpg", description: "New product description", unit: "pcs", type: "Electronics" },
 ];
 
-// Generate Top Products (8 products)
-const topProducts = [
-  baseProduct("Top Product 1", 100, 90, "1.jpg", "Top product description", "Fashion", 200),
-  baseProduct("Top Product 2", 120, 100, "2.jpg", "Top product description", "Fashion", 150),
-  baseProduct("Top Product 3", 130, 110, "3.jpg", "Top product description", "Fashion", 180),
-  baseProduct("Top Product 4", 140, 120, "4.jpg", "Top product description", "Fashion", 90),
-  baseProduct("Top Product 5", 150, 130, "5.jpg", "Top product description", "Fashion", 250),
-  baseProduct("Top Product 6", 160, 140, "6.jpg", "Top product description", "Fashion", 300),
-  baseProduct("Top Product 7", 170, 150, "7.jpg", "Top product description", "Fashion", 80),
-  baseProduct("Top Product 8", 180, 160, "8.jpg", "Top product description", "Fashion", 400),
+// Top Products (8 products)
+const topProductsData = [
+  { name: "Top Product 1", unit_price: 100, promotion_price: 90, image: "1.jpg", description: "Top product description", unit: "pcs", type: "Fashion" },
+  { name: "Top Product 2", unit_price: 120, promotion_price: 100, image: "2.jpg", description: "Top product description", unit: "pcs", type: "Fashion" },
+  { name: "Top Product 3", unit_price: 130, promotion_price: 110, image: "3.jpg", description: "Top product description", unit: "pcs", type: "Fashion" },
+  { name: "Top Product 4", unit_price: 140, promotion_price: 120, image: "4.jpg", description: "Top product description", unit: "pcs", type: "Fashion" },
+  { name: "Top Product 5", unit_price: 150, promotion_price: 130, image: "5.jpg", description: "Top product description", unit: "pcs", type: "Fashion" },
+  { name: "Top Product 6", unit_price: 160, promotion_price: 140, image: "6.jpg", description: "Top product description", unit: "pcs", type: "Fashion" },
+  { name: "Top Product 7", unit_price: 170, promotion_price: 150, image: "7.jpg", description: "Top product description", unit: "pcs", type: "Fashion" },
+  { name: "Top Product 8", unit_price: 180, promotion_price: 160, image: "8.jpg", description: "Top product description", unit: "pcs", type: "Fashion" },
 ];
-
-// Combine both product arrays
-const products = [...newProducts, ...topProducts];
 
 async function seedProducts() {
   try {
     // Clear the existing products collection
     await Product.deleteMany({});
     console.log('Old products deleted.');
+
+    // Clear and seed product types
+    await ProductType.deleteMany({});
+    const savedTypes = await ProductType.insertMany(productTypes);
+    console.log('Product types added.');
+
+    // Map product type names to their ObjectIds
+    const typeMap = savedTypes.reduce((map, type) => {
+      map[type.name] = type._id;
+      return map;
+    }, {});
+
+    // Assign `id_type` to products based on their type
+    const products = [...newProductsData, ...topProductsData].map(product => ({
+      ...baseProduct(
+        product.name,
+        typeMap[product.type],
+        product.unit_price,
+        product.promotion_price,
+        product.image,
+        product.description,
+        product.unit
+      )
+    }));
 
     // Insert all products at once
     await Product.insertMany(products);
