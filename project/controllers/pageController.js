@@ -36,10 +36,10 @@ exports.contact = (req, res) => {
 // Product Type page route handler
 exports.productType = async (req, res) => {
   try {
-      const products = await Product.find();  // Fetch products if needed
+      const products = await Product.find();  
       res.render('index', {
           products,
-          content: 'product_type' // This will render the 'product_type.ejs' file in the content section of the layout
+          content: 'product_type' 
       });
   } catch (err) {
       console.log(err);
