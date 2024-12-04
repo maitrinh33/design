@@ -1,19 +1,16 @@
-// Import the models for the product and slide
+// Import the models for the product 
 const Product = require('../models/Product');
-const Slide = require('../models/Slide');
+const product_type = require('../models/product_type');
 
-// Homepage route handler for Product and Slide models
+// Homepage route handler for Product  models
 exports.homepage = async (req, res) => {
   try {
     // Fetch products and slides from MongoDB
     const products = await Product.find();
-    const slides = await Slide.find().sort({ position: 1 });
-
-    // Render the homepage with products and slides
+    // Render the homepage with products 
     // Pass 'content' as null if not needed
     res.render('index', { 
       products, 
-      slides,
       content: null // No content for homepage, or specify a default
     });
   } catch (err) {
@@ -46,6 +43,8 @@ exports.productType = async (req, res) => {
       res.status(500).send('Error loading product type page');
   }
 };
+
+
 
 
 
