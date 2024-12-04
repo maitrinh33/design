@@ -19,8 +19,12 @@
     <!-- Include Header Partial -->
     <%- include('partials/header') %> 
 
-    <!-- Include Homepage Content -->
-    <%- include('homepage') %> 
+    <!-- Dynamic Content -->
+    <% if (content) { %>
+        <%- include(content) %> 
+    <% } else { %>
+        <%- include('homepage') %> 
+    <% } %>
 
     <!-- Include Footer Partial -->
     <%- include('partials/footer') %> 

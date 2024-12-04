@@ -26,6 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `bills`
 --
 USE db_banhang;
+DROP TABLE IF EXISTS `bills`;
 
 CREATE TABLE `bills` (
   `id` int(10) UNSIGNED NOT NULL,

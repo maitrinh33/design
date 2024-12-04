@@ -9,13 +9,19 @@ exports.homepage = async (req, res) => {
     const products = await Product.find();
     const slides = await Slide.find().sort({ position: 1 });
 
-    // Render the homepage with products and slides (or use 'index' if desired)
-    res.render('index', { products, slides });  // Rendering 'index.ejs' for homepage
+    // Render the homepage with products and slides
+    // Pass 'content' as null if not needed
+    res.render('index', { 
+      products, 
+      slides,
+      content: null // No content for homepage, or specify a default
+    });
   } catch (err) {
     console.log(err);
     res.status(500).send('Error loading homepage');
   }
 };
+
 
 // About page route handler
 exports.about = (req, res) => {

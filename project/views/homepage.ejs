@@ -46,14 +46,15 @@
 		<div id="content" class="space-top-none">
 			<div class="main-content">
 				<div class="space60">&nbsp;</div>
-				
+	
 				<!-- New Products Section -->
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="beta-products-list">
 							<h4>New Products</h4>
 							<div class="beta-products-details">
-								<p class="pull-left"><%= products.length %> styles found</p>
+								<!-- Display count of products in New Products -->
+								<p class="pull-left"><%= products.slice(0, 4).length %> styles found</p>
 								<div class="clearfix"></div>
 							</div>
 	
@@ -107,12 +108,13 @@
 						<div class="beta-products-list">
 							<h4>Top Products</h4>
 							<div class="beta-products-details">
-								<p class="pull-left"><%= products.length %> styles found</p>
+								<!-- Display count of products in Top Products -->
+								<p class="pull-left"><%= products.slice(4, 12).length %> styles found</p>
 								<div class="clearfix"></div>
 							</div>
 	
 							<div class="row">
-								<!-- Loop through the first 8 products for Top Products -->
+								<!-- Loop through the next 8 products for Top Products -->
 								<% products.slice(4, 12).forEach(product => { %>
 									<div class="col-sm-3">
 										<div class="single-item">
@@ -155,6 +157,7 @@
 			</div>
 		</div>
 	</div>
+	
 	
 	
 
