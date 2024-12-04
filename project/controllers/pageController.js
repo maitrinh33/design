@@ -33,6 +33,21 @@ exports.contact = (req, res) => {
   res.render('index', { content: 'partials/contact' });
 };
 
+// Product Type page route handler
+exports.productType = async (req, res) => {
+  try {
+      const products = await Product.find();  // Fetch products if needed
+      res.render('index', {
+          products,
+          content: 'product_type' // This will render the 'product_type.ejs' file in the content section of the layout
+      });
+  } catch (err) {
+      console.log(err);
+      res.status(500).send('Error loading product type page');
+  }
+};
+
+
 
 
 
